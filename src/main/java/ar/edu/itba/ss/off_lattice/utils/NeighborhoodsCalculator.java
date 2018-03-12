@@ -83,8 +83,12 @@ public class NeighborhoodsCalculator {
         }
     }
 
-
-    private Map<Particle, List<Particle>> computeNeighbors() {
+    /**
+     * Computes the neighborhoods in the {@link Space}.
+     *
+     * @return a {@link Map} holding for each {@link Particle} in the {@link Space} its neighbors.
+     */
+    public Map<Particle, List<Particle>> computeNeighborhoods() {
 
         LOGGER.debug("Splitting space into a grid....");
         // Split space particles into a grid
