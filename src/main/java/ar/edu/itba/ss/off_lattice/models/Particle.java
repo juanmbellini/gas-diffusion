@@ -54,9 +54,17 @@ public class Particle {
         return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
     }
 
-    public void move() {
-        this.x += Math.cos(this.speedAngle) * this.speedModule;
-        this.y += Math.sin(this.speedAngle) * this.speedModule;
+    /**
+     * Makes the particle to move.
+     *
+     * @param limit The limit of the {@link Space} in which this {@link Particle} resides
+     *              (i.e used for periodic boundary conditions).
+     */
+    public void move(int limit) {
+        final double auxX = (Math.cos(this.speedAngle) * this.speedModule) % limit;
+        final double auxY = (Math.sin(this.speedAngle) * this.speedModule) % limit;
+        this.x += auxX < 0 ? auxX + limit : auxX;
+        this.y += auxY < 0 ? auxX + limit : auxX;
     }
 
 
