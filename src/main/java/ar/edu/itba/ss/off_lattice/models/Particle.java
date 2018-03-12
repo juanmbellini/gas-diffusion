@@ -60,7 +60,7 @@ public class Particle {
      * @param limit The limit of the {@link Space} in which this {@link Particle} resides
      *              (i.e used for periodic boundary conditions).
      */
-    public void move(int limit) {
+    public void move(double limit) {
         final double auxX = (Math.cos(this.speedAngle) * this.speedModule) % limit;
         final double auxY = (Math.sin(this.speedAngle) * this.speedModule) % limit;
         this.x += auxX < 0 ? auxX + limit : auxX;
