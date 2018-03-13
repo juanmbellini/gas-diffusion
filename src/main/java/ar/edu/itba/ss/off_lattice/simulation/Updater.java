@@ -4,9 +4,7 @@ import ar.edu.itba.ss.off_lattice.models.Particle;
 import ar.edu.itba.ss.off_lattice.models.Space;
 import ar.edu.itba.ss.off_lattice.utils.NeighborhoodsCalculator;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.stream.DoubleStream;
 
@@ -63,13 +61,13 @@ public class Updater {
      * Updates the angles in the neighborhoods of the {@link Space}.
      */
     private void updateAngles() {
-        final Map<Particle, List<Particle>> neighborhoods = neighborhoodsCalculator.computeNeighborhoods();
         final double upper = this.eta / 2;
         final double lower = -1 * upper;
-        neighborhoods.forEach((particle, neighbors) -> {
-            final double noise = lower + (new Random().nextDouble() * (upper - lower));
-            particle.setSpeedAngle(average(particle, neighbors) + noise);
-        });
+        neighborhoodsCalculator.computeNeighborhoods()
+                .forEach((particle, neighbors) -> {
+                    final double noise = lower + (new Random().nextDouble() * (upper - lower));
+                    particle.setSpeedAngle(average(particle, neighbors) + noise);
+                });
     }
 
     /**
