@@ -1,5 +1,6 @@
 package ar.edu.itba.ss.off_lattice.models;
 
+import ar.edu.itba.ss.off_lattice.simulation.StateSaver;
 import org.springframework.util.Assert;
 
 import java.util.LinkedList;
@@ -58,12 +59,12 @@ public class Space implements StateSaver {
     }
 
     /**
-     * Bean class that extends {@link ar.edu.itba.ss.off_lattice.models.StateSaver.State},
+     * Bean class that extends {@link StateSaver.State},
      * which stores the actual state of a {@link Space}.
      */
     public static final class SpaceState extends State {
         /**
-         * The {@link ar.edu.itba.ss.off_lattice.models.StateSaver.State} of the {@link Particle}s in the {@link Space}.
+         * The {@link StateSaver.State} of the {@link Particle}s in the {@link Space}.
          */
         final List<Particle.ParticleState> particleStates;
 

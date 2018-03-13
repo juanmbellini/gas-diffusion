@@ -1,5 +1,6 @@
 package ar.edu.itba.ss.off_lattice.models;
 
+import ar.edu.itba.ss.off_lattice.simulation.StateSaver;
 import org.springframework.util.Assert;
 
 /**
@@ -72,7 +73,7 @@ public class Particle implements StateSaver {
     }
 
     /**
-     * Bean class that extends {@link ar.edu.itba.ss.off_lattice.models.StateSaver.State},
+     * Bean class that extends {@link StateSaver.State},
      * which stores the actual state of a {@link Particle}.
      */
     public static final class ParticleState extends State {
