@@ -31,14 +31,15 @@ public class Updater {
     /**
      * Constructor.
      *
-     * @param space                   The {@link Space} to which the updated will be performed.
-     * @param neighborhoodsCalculator The {@link NeighborhoodsCalculator} used to get a {@link Particle}s neighbors
-     *                                (i.e used for angle updates).
-     * @param eta                     The eta value used for noise when updating the angle.
+     * @param space             The {@link Space} to which the updated will be performed.
+     * @param interactionRadius The interaction radius
+     *                          (i.e up to which radius a {@link Particle} is consider a neighbor of another).
+     * @param eta               The eta value used for noise when updating the angle.
+     * @param M                 The amount of grids the {@link Space} is divided into.
      */
-    public Updater(Space space, NeighborhoodsCalculator neighborhoodsCalculator, double eta) {
+    public Updater(Space space, double interactionRadius, double eta, int M) {
         this.space = space;
-        this.neighborhoodsCalculator = neighborhoodsCalculator; // TODO: validate that it is a calculator for the given space
+        this.neighborhoodsCalculator = new NeighborhoodsCalculator(space, interactionRadius, M);
         this.eta = eta;
     }
 

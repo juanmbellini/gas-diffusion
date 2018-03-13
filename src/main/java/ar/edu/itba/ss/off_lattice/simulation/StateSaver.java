@@ -1,4 +1,4 @@
-package ar.edu.itba.ss.off_lattice.models;
+package ar.edu.itba.ss.off_lattice.simulation;
 
 /**
  * Defines behaviour for an object that can save its state.
