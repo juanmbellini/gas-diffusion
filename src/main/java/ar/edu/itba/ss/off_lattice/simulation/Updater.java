@@ -66,8 +66,10 @@ public class Updater {
         final Map<Particle, List<Particle>> neighborhoods = neighborhoodsCalculator.computeNeighborhoods();
         final double upper = this.eta / 2;
         final double lower = -1 * upper;
-        final double noise = lower + (new Random().nextDouble() * (upper - lower));
-        neighborhoods.forEach((particle, neighbors) -> particle.setSpeedAngle(average(particle, neighbors) + noise));
+        neighborhoods.forEach((particle, neighbors) -> {
+            final double noise = lower + (new Random().nextDouble() * (upper - lower));
+            particle.setSpeedAngle(average(particle, neighbors) + noise);
+        });
     }
 
     /**
