@@ -25,8 +25,6 @@ public class Updater {
      */
     private final NeighborhoodsCalculator neighborhoodsCalculator;
 
-    private Map<Particle, List<Particle>> stepBeforeNeighborhoods;
-
     /**
      * The eta value used for noise when updating the angle.
      */
@@ -44,19 +42,14 @@ public class Updater {
         this.space = space;
         this.neighborhoodsCalculator = neighborhoodsCalculator; // TODO: validate that it is a calculator for the given space
         this.eta = eta;
-        this.stepBeforeNeighborhoods = new HashMap<>();
     }
 
     /**
      * Updates the {@link Space}.
      */
     public void update() {
-        // First compute the neighborhoods as the positions are needed before the particles are moved.
-        final Map<Particle, List<Particle>> neighborhoods = neighborhoodsCalculator.computeNeighborhoods();
-        // Update positions (using the initial positions and the speed).
-        updatePositions();
-        // Update angles (using the computed neighborhoods).
-        updateAngles(neighborhoods);
+        updatePositions(); // Update positions (using the initial positions and the speed).
+        updateAngles(); // Update angles (using the computed neighborhoods).
     }
 
     /**
@@ -69,7 +62,8 @@ public class Updater {
     /**
      * Updates the angles in the neighborhoods of the {@link Space}.
      */
-    private void updateAngles(Map<Particle, List<Particle>> neighborhoods) {
+    private void updateAngles() {
+        final Map<Particle, List<Particle>> neighborhoods = neighborhoodsCalculator.computeNeighborhoods();
         final double upper = this.eta / 2;
         final double lower = -1 * upper;
         final double noise = lower + (new Random().nextDouble() * (upper - lower));
