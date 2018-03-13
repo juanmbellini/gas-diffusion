@@ -41,11 +41,6 @@ public class SimulationEngine {
     private final Queue<StateSaver.State> states;
 
     /**
-     * A flag indicating if the simulation has been performed.
-     */
-    private boolean finished;
-
-    /**
      * A flag indicating that this engine is now simulating
      * (i.e used for concurrency stuff without locking, but throwing an exception).
      */
@@ -64,7 +59,6 @@ public class SimulationEngine {
         this.amountOfParticles = amountOfParticles;
         this.interactionRadius = interactionRadius;
         this.states = new LinkedList<>();
-        this.finished = false;
         this.simulating = false;
     }
 
@@ -84,8 +78,6 @@ public class SimulationEngine {
             updater.update();
             states.offer(space.saveState());
         }
-        this.finished = true;
-        this.simulating = false;
     }
 
     /**
@@ -97,7 +89,6 @@ public class SimulationEngine {
     public void clearEngine() throws IllegalStateException {
         validateState();
         this.states.clear();
-        this.finished = false;
     }
 
     /**
