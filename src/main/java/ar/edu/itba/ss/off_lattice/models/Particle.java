@@ -66,7 +66,7 @@ public class Particle {
         final double auxX = (Math.cos(this.speedAngle) * this.speedModule) % limit;
         final double auxY = (Math.sin(this.speedAngle) * this.speedModule) % limit;
         x += auxX < 0 ? auxX + limit : auxX;
-        y += auxY < 0 ? auxX + limit : auxY;
+        y += auxY < 0 ? auxY + limit : auxY;
     }
 
 
