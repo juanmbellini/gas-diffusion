@@ -25,7 +25,7 @@ public class Updater {
      */
     private final NeighborhoodsCalculator neighborhoodsCalculator;
 
-    private Map<Particle, List<Particle>> stepBeforeNeighborhoods;
+    private final Map<Particle, List<Particle>> stepBeforeNeighborhoods;
 
     /**
      * The eta value used for noise when updating the angle.
@@ -40,11 +40,11 @@ public class Updater {
      *                                (i.e used for angle updates).
      * @param eta                     The eta value used for noise when updating the angle.
      */
-    public Updater(Space space, NeighborhoodsCalculator neighborhoodsCalculator, double eta) {
+    public Updater(final Space space, final NeighborhoodsCalculator neighborhoodsCalculator, final double eta) {
         this.space = space;
         this.neighborhoodsCalculator = neighborhoodsCalculator; // TODO: validate that it is a calculator for the given space
         this.eta = eta;
-        this.stepBeforeNeighborhoods = new HashMap<>();
+        stepBeforeNeighborhoods = new HashMap<>();
     }
 
     /**
@@ -69,7 +69,7 @@ public class Updater {
     /**
      * Updates the angles in the neighborhoods of the {@link Space}.
      */
-    private void updateAngles(Map<Particle, List<Particle>> neighborhoods) {
+    private void updateAngles(final Map<Particle, List<Particle>> neighborhoods) {
         final double upper = this.eta / 2;
         final double lower = -1 * upper;
         final double noise = lower + (new Random().nextDouble() * (upper - lower));
@@ -83,7 +83,7 @@ public class Updater {
      * @param neighbors The neighbors.
      * @return The calculated average angle.
      */
-    private static double average(Particle particle, List<Particle> neighbors) {
+    private static double average(final Particle particle, final List<Particle> neighbors) {
         final DoubleStream particleAngleSinStream = DoubleStream.of(particle.getSpeedAngle()).map(Math::sin);
         final DoubleStream neighborsSinStream = neighbors.stream().mapToDouble(Particle::getSpeedAngle).map(Math::sin);
         final double sinAvg = DoubleStream.concat(particleAngleSinStream, neighborsSinStream)

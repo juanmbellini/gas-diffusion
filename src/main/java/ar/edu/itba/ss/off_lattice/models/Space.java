@@ -33,7 +33,7 @@ public class Space {
      *                                  if the {@code particles} list is {@code null},
      *                                  or if any particle in the {@code particles} list is not part of this space.
      */
-    public Space(double sideLength, List<Particle> particles) throws IllegalArgumentException {
+    public Space(final double sideLength, final List<Particle> particles) throws IllegalArgumentException {
         validateSideLength(sideLength);
         validateParticlesList(particles, sideLength);
         this.sideLength = sideLength;
@@ -61,7 +61,7 @@ public class Space {
      * @param sideLength The value to be validated.
      * @throws IllegalArgumentException In case the value is not legal (i.e is not positive).
      */
-    private static void validateSideLength(double sideLength) throws IllegalArgumentException {
+    private static void validateSideLength(final double sideLength) throws IllegalArgumentException {
         if (Double.compare(sideLength, 0.0) <= 0) {
             throw new IllegalArgumentException("The side length must be positive");
         }
@@ -74,7 +74,7 @@ public class Space {
      * @param sideLength The side length, which states a limit for the particles position.
      * @throws IllegalArgumentException In case the list is not valid.
      */
-    private static void validateParticlesList(List<Particle> particles, double sideLength)
+    private static void validateParticlesList(final List<Particle> particles, final double sideLength)
             throws IllegalArgumentException {
         Assert.notNull(particles, "The particles list must not be null.");
         final long legalParticlesAmount = particles.stream()
