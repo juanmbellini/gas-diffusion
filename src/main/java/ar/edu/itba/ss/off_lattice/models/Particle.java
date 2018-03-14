@@ -64,7 +64,7 @@ public class Particle implements StateSaver {
         final double auxX = (Math.cos(this.speedAngle) * this.speedModule) % limit;
         final double auxY = (Math.sin(this.speedAngle) * this.speedModule) % limit;
         this.x += auxX < 0 ? auxX + limit : auxX;
-        this.y += auxY < 0 ? auxX + limit : auxX;
+        this.y += auxY < 0 ? auxY + limit : auxY;
     }
 
     @Override
