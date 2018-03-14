@@ -50,12 +50,12 @@ public class NeighborhoodsCalculator {
      *                          (i.e up to which radius a {@link Particle} is consider a neighbor of another).
      * @param M                 The amount of grids the {@link Space} is divided into.
      */
-    public NeighborhoodsCalculator(Space space, double interactionRadius, int M) {
+    public NeighborhoodsCalculator(final Space space, final double interactionRadius, final int M) {
         validateParams(space, interactionRadius, M);
         this.space = space;
         this.interactionRadius = interactionRadius;
         this.M = M;
-        this.gridCellFactory = GridCellFactory.getFactory(M);
+        gridCellFactory = GridCellFactory.getFactory(M);
 
     }
 
@@ -67,7 +67,8 @@ public class NeighborhoodsCalculator {
      * @param M                 The 'M' value to be validated.
      * @throws IllegalArgumentException In case any of the parameters in not valid.
      */
-    private static void validateParams(Space space, double interactionRadius, int M) throws IllegalArgumentException {
+    private static void validateParams(final Space space, final double interactionRadius, final int M) 
+    throws IllegalArgumentException {
         Assert.notNull(space, "The space must not be null");
         if (Double.compare(interactionRadius, 0) < 0) {
             // TODO: check interaction radius == 0 (particles in the exact same position)
@@ -162,7 +163,7 @@ public class NeighborhoodsCalculator {
      * @return The {@link GridCell} to which the particle belongs to.
      * @implNote The origin of the grid is the lower left corner.
      */
-    private GridCell getGridPosition(Particle particle, double factor) {
+    private GridCell getGridPosition(final Particle particle, final double factor) {
         final int row = (int) (particle.getY() * factor);
         final int column = (int) (particle.getX() * factor);
 
@@ -180,7 +181,8 @@ public class NeighborhoodsCalculator {
      *                         (used to know how to take into account periodic boundary conditions).
      * @return A {@link List} holding those {@link Particle}s related to the given {@code grid}.
      */
-    private List<Particle> nearParticles(GridCell grid, Map<GridCell, List<Particle>> particlesPerCell, int M) {
+    private List<Particle> nearParticles(final GridCell grid, final Map<GridCell, List<Particle>> particlesPerCell, 
+        final int M) {
         final Set<GridCell> neighborCells = neighborGridCell(grid, M);
         return particlesPerCell.entrySet().stream()
                 .filter(entry -> neighborCells.contains(entry.getKey()))
@@ -197,7 +199,7 @@ public class NeighborhoodsCalculator {
      *                 (used to know how to take into account periodic boundary conditions).
      * @return A {@link Set} holding the neighbor {@link GridCell}s of the given {@code gridCell}.
      */
-    private Set<GridCell> neighborGridCell(GridCell gridCell, int M) {
+    private Set<GridCell> neighborGridCell(final GridCell gridCell, final int M) {
         // Upper grid cell
         final int upperRow = Math.floorMod(gridCell.getRow() + 1, M);
         final int upperColumn = Math.floorMod(gridCell.getColumn(), M);
@@ -222,11 +224,10 @@ public class NeighborhoodsCalculator {
         ).collect(Collectors.toSet());
     }
 
-
     /**
      * Bean class representing a position in the grid (i.e a corresponding cell).
      */
-    private static final class GridCell {
+    /* default */ static final class GridCell {
 
         /**
          * The row for this cell.
@@ -244,7 +245,7 @@ public class NeighborhoodsCalculator {
          * @param row    The row for this cell.
          * @param column The column for this cell.
          */
-        private GridCell(int row, int column) {
+        /* default */ GridCell(final int row, final int column) {
             if (row < 0 || column < 0) {
                 throw new IllegalArgumentException("Row and Column must be positive.");
             }
@@ -255,14 +256,14 @@ public class NeighborhoodsCalculator {
         /**
          * @return The row for this cell.
          */
-        private int getRow() {
+        /* default */ int getRow() {
             return row;
         }
 
         /**
          * @return The column for this cell.
          */
-        private int getColumn() {
+        /* default */ int getColumn() {
             return column;
         }
 
@@ -289,7 +290,7 @@ public class NeighborhoodsCalculator {
     /**
      * Factory class for {@link GridCell}s, in order to avoid creating a new {@link GridCell} each time it is needed.
      */
-    private static final class GridCellFactory {
+    /* default */ static final class GridCellFactory {
 
         /**
          * {@link Map} holding, for each value of {@code M}, the corresponding {@link GridCellFactory}.
@@ -313,10 +314,10 @@ public class NeighborhoodsCalculator {
          *
          * @param M The amount of cells per side.
          */
-        private GridCellFactory(int M) {
+        /* default */ GridCellFactory(final int M) {
             this.M = M;
             // Create all GridCells when this factory is created.
-            this.grid = IntStream.range(0, M)
+            grid = IntStream.range(0, M)
                     .mapToObj(row ->
                             IntStream.range(0, M)
                                     .mapToObj(column -> new GridCell(row, column))
@@ -331,7 +332,7 @@ public class NeighborhoodsCalculator {
          * @param column The column of the {@link GridCell}.
          * @return The {@link GridCell} with the given {@code row} and {@code column.}.
          */
-        private GridCell getGridCell(int row, int column) {
+        /* default */ GridCell getGridCell(final int row, final int column) {
             if (row < 0 || row >= M || column < 0 || column >= M) {
                 throw new IllegalArgumentException("Row and Column must be values between 0 and " + M + ".");
             }
@@ -347,7 +348,7 @@ public class NeighborhoodsCalculator {
          * in case there are write interferences at most we will have instantiated twice the same factory,
          * which is not a problem, as the Map will override with the same value for a given key.
          */
-        private static GridCellFactory getFactory(int M) {
+        /* default */ static GridCellFactory getFactory(final int M) {
             GridCellFactory factory = factories.get(M);
             if (factory == null) {
                 factory = new GridCellFactory(M);

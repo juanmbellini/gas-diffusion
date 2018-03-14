@@ -22,12 +22,12 @@ public class App implements CommandLineRunner {
      *
      * @param args Program arguments.
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         SpringApplication.run(App.class, args);
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(final String... args) throws Exception {
         LOGGER.info("Hello, System Simulations");
     }
 }

@@ -23,6 +23,8 @@ public class Updater {
      */
     private final NeighborhoodsCalculator neighborhoodsCalculator;
 
+    private final Map<Particle, List<Particle>> stepBeforeNeighborhoods;
+
     /**
      * The eta value used for noise when updating the angle.
      */
@@ -37,10 +39,12 @@ public class Updater {
      * @param eta               The eta value used for noise when updating the angle.
      * @param M                 The amount of grids the {@link Space} is divided into.
      */
-    public Updater(Space space, double interactionRadius, double eta, int M) {
+
+    public Updater(final Space space, final double interactionRadius, final double eta, final int M) {
         this.space = space;
         this.neighborhoodsCalculator = new NeighborhoodsCalculator(space, interactionRadius, M);
         this.eta = eta;
+        stepBeforeNeighborhoods = new HashMap<>();
     }
 
     /**
@@ -78,7 +82,7 @@ public class Updater {
      * @param neighbors The neighbors.
      * @return The calculated average angle.
      */
-    private static double average(Particle particle, List<Particle> neighbors) {
+    private static double average(final Particle particle, final List<Particle> neighbors) {
         final DoubleStream particleAngleSinStream = DoubleStream.of(particle.getSpeedAngle()).map(Math::sin);
         final DoubleStream neighborsSinStream = neighbors.stream().mapToDouble(Particle::getSpeedAngle).map(Math::sin);
         final double sinAvg = DoubleStream.concat(particleAngleSinStream, neighborsSinStream)
