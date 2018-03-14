@@ -1,5 +1,7 @@
 package ar.edu.itba.ss.off_lattice.simulation;
 
+import java.io.Serializable;
+
 /**
  * Defines behaviour for an object that can save its state.
  */
@@ -17,6 +19,6 @@ public interface StateSaver {
     /**
      * Abstract class representing a state.
      */
-    abstract class State {
+    abstract class State implements Serializable {
     }
 }
