@@ -62,8 +62,69 @@ These instructions will install the system in your local machine.
 You can run the simulation with the following command:
 
 ```
-$ java -jar <path-to-jar>
+$ java -jar <path-to-jar> [arguments]
 ```
+
+In order to customize the simulation, you can specify different types of parameters.
+
+### Space Size
+You can specify the space's side length with the ```--custom.system.length``` argument.
+For example, if you want a length of ```150.0```, you would execute:
+
+```
+$ java -jar <path-to-jar> --custom.system.length=150.0
+```
+**The default value is 100.0**
+
+### Amount of Particles
+You can specify the amount of particles in the space with the ```--particles``` argument.
+For example, if you want ```2000``` particles, you would execute:
+
+```
+$ java -jar <path-to-jar> --custom.system.particles=2000
+```
+
+**The default value is 1000**
+
+### Interaction Radius
+You can specify the particle's interaction radius with the ```--custom.system.interaction-radius``` argument.
+For example, if you want a radius of ```4.5```, you would execute:
+
+```
+$ java -jar <path-to-jar> --custom.system.interaction-radius=4.5
+```
+
+**The default value is 2.5**
+
+### Simulation iterations
+You can specify the amount of simulation iterations to be performed by the simulator with the ```--custom.simulation.iterations``` argument.
+For example, if you want to perform ```2000``` iterations, you would execute:
+
+```
+$ java -jar <path-to-jar> --custom.simulation.iterations=2000
+```
+
+**The default value is 500**
+
+### ETA value
+You can specify the eta value to be used to calculate noise when updating the particle's speed angle with the ```--custom.simulation.eta``` argument.
+For example, if you want an eta value of ```3.5```, you would execute:
+
+```
+$ java -jar <path-to-jar> --custom.simulation.eta=3.5
+```
+
+**The default value is 1.5**
+
+### M value
+You can specify the M value to be used by the cell index method with the ```--custom.simulation.M``` argument.
+For example, if you want an M value of ```15```, you would execute:
+
+```
+$ java -jar <path-to-jar> --custom.simulation.M=15
+```
+
+**The default value is 10**
 
 ## Authors
 
