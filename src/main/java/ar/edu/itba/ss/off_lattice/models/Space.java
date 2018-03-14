@@ -1,18 +1,17 @@
 package ar.edu.itba.ss.off_lattice.models;
 
+import ar.edu.itba.ss.off_lattice.simulation.StateSaver;
 import org.springframework.util.Assert;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * Represents a space in which the simulation is done.
  * Note that this is a squared space.
  */
-public class Space {
+public class Space implements StateSaver {
 
     /**
      * The length of the side of this space.
@@ -52,6 +51,33 @@ public class Space {
      */
     public List<Particle> getParticles() {
         return new LinkedList<>(particles);
+    }
+
+    @Override
+    public State saveState() {
+        return null;
+    }
+
+    /**
+     * Bean class that extends {@link StateSaver.State},
+     * which stores the actual state of a {@link Space}.
+     */
+    public static final class SpaceState extends State {
+        /**
+         * The {@link StateSaver.State} of the {@link Particle}s in the {@link Space}.
+         */
+        final List<Particle.ParticleState> particleStates;
+
+        /**
+         * Constructor.
+         *
+         * @param space The {@link Space} whose state must be saved.
+         */
+        public SpaceState(Space space) {
+            this.particleStates = space.getParticles().stream()
+                    .map(Particle::saveState)
+                    .collect(Collectors.toList());
+        }
     }
 
 

@@ -4,9 +4,7 @@ import ar.edu.itba.ss.off_lattice.models.Particle;
 import ar.edu.itba.ss.off_lattice.models.Space;
 import ar.edu.itba.ss.off_lattice.utils.NeighborhoodsCalculator;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.stream.DoubleStream;
 
@@ -35,14 +33,16 @@ public class Updater {
     /**
      * Constructor.
      *
-     * @param space                   The {@link Space} to which the updated will be performed.
-     * @param neighborhoodsCalculator The {@link NeighborhoodsCalculator} used to get a {@link Particle}s neighbors
-     *                                (i.e used for angle updates).
-     * @param eta                     The eta value used for noise when updating the angle.
+     * @param space             The {@link Space} to which the updated will be performed.
+     * @param interactionRadius The interaction radius
+     *                          (i.e up to which radius a {@link Particle} is consider a neighbor of another).
+     * @param eta               The eta value used for noise when updating the angle.
+     * @param M                 The amount of grids the {@link Space} is divided into.
      */
-    public Updater(final Space space, final NeighborhoodsCalculator neighborhoodsCalculator, final double eta) {
+
+    public Updater(final Space space, final double interactionRadius, final double eta, final int M) {
         this.space = space;
-        this.neighborhoodsCalculator = neighborhoodsCalculator; // TODO: validate that it is a calculator for the given space
+        this.neighborhoodsCalculator = new NeighborhoodsCalculator(space, interactionRadius, M);
         this.eta = eta;
         stepBeforeNeighborhoods = new HashMap<>();
     }
@@ -51,12 +51,8 @@ public class Updater {
      * Updates the {@link Space}.
      */
     public void update() {
-        // First compute the neighborhoods as the positions are needed before the particles are moved.
-        final Map<Particle, List<Particle>> neighborhoods = neighborhoodsCalculator.computeNeighborhoods();
-        // Update positions (using the initial positions and the speed).
-        updatePositions();
-        // Update angles (using the computed neighborhoods).
-        updateAngles(neighborhoods);
+        updatePositions(); // Update positions (using the initial positions and the speed).
+        updateAngles(); // Update angles (using the computed neighborhoods).
     }
 
     /**
@@ -69,11 +65,14 @@ public class Updater {
     /**
      * Updates the angles in the neighborhoods of the {@link Space}.
      */
-    private void updateAngles(final Map<Particle, List<Particle>> neighborhoods) {
+    private void updateAngles() {
         final double upper = this.eta / 2;
         final double lower = -1 * upper;
-        final double noise = lower + (new Random().nextDouble() * (upper - lower));
-        neighborhoods.forEach((particle, neighbors) -> particle.setSpeedAngle(average(particle, neighbors) + noise));
+        neighborhoodsCalculator.computeNeighborhoods()
+                .forEach((particle, neighbors) -> {
+                    final double noise = lower + (new Random().nextDouble() * (upper - lower));
+                    particle.setSpeedAngle(average(particle, neighbors) + noise);
+                });
     }
 
     /**

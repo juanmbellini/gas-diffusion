@@ -1,13 +1,13 @@
 package ar.edu.itba.ss.off_lattice.models;
 
+import ar.edu.itba.ss.off_lattice.simulation.StateSaver;
 import org.springframework.util.Assert;
 
 /**
  * Represents a particle of the simulation.
  * This is a point-alike particle (i.e it has no radius).
  */
-public class Particle {
-
+public class Particle implements StateSaver {
 
     /**
      * The 'x' value for this particle's position.
@@ -67,6 +67,74 @@ public class Particle {
         final double auxY = (Math.sin(this.speedAngle) * this.speedModule) % limit;
         x += auxX < 0 ? auxX + limit : auxX;
         y += auxY < 0 ? auxY + limit : auxY;
+    }
+
+    @Override
+    public ParticleState saveState() {
+        return new ParticleState(this);
+    }
+
+    /**
+     * Bean class that extends {@link StateSaver.State},
+     * which stores the actual state of a {@link Particle}.
+     */
+    public static final class ParticleState extends State {
+        /**
+         * The 'x' value of the particle.
+         */
+        private final double x;
+        /**
+         * The 'y' value of the particle.
+         */
+        private final double y;
+        /**
+         * The speed module value of the particle.
+         */
+        private final double speedModule;
+        /**
+         * The speed angle value of the particle.
+         */
+        private final double speedAngle;
+
+        /**
+         * Constructor.
+         *
+         * @param particle The {@link Particle} whose state must be saved.
+         */
+        private ParticleState(Particle particle) {
+            this.x = particle.getX();
+            this.y = particle.getY();
+            this.speedModule = particle.getSpeedModule();
+            this.speedAngle = particle.getSpeedAngle();
+        }
+
+        /**
+         * @return The 'x' value of the particle.
+         */
+        public double getX() {
+            return x;
+        }
+
+        /**
+         * @return The 'y' value of the particle.
+         */
+        public double getY() {
+            return y;
+        }
+
+        /**
+         * @return The speed module value of the particle.
+         */
+        public double getSpeedModule() {
+            return speedModule;
+        }
+
+        /**
+         * @return The speed angle value of the particle.
+         */
+        public double getSpeedAngle() {
+            return speedAngle;
+        }
     }
 
 
