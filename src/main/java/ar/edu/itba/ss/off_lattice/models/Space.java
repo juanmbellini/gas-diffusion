@@ -55,29 +55,7 @@ public class Space implements StateSaver {
 
     @Override
     public State saveState() {
-        return null;
-    }
-
-    /**
-     * Bean class that extends {@link StateSaver.State},
-     * which stores the actual state of a {@link Space}.
-     */
-    public static final class SpaceState extends State {
-        /**
-         * The {@link StateSaver.State} of the {@link Particle}s in the {@link Space}.
-         */
-        final List<Particle.ParticleState> particleStates;
-
-        /**
-         * Constructor.
-         *
-         * @param space The {@link Space} whose state must be saved.
-         */
-        public SpaceState(Space space) {
-            this.particleStates = space.getParticles().stream()
-                    .map(Particle::saveState)
-                    .collect(Collectors.toList());
-        }
+        return new SpaceState(this);
     }
 
 
@@ -111,6 +89,32 @@ public class Space implements StateSaver {
                 .count();
         if (legalParticlesAmount != particles.size()) {
             throw new IllegalArgumentException("There are particles that are not part of this space");
+        }
+    }
+
+    // ========================================
+    // State
+    // ========================================
+
+    /**
+     * Bean class that extends {@link StateSaver.State},
+     * which stores the actual state of a {@link Space}.
+     */
+    public static final class SpaceState extends State {
+        /**
+         * The {@link StateSaver.State} of the {@link Particle}s in the {@link Space}.
+         */
+        final List<Particle.ParticleState> particleStates;
+
+        /**
+         * Constructor.
+         *
+         * @param space The {@link Space} whose state must be saved.
+         */
+        private SpaceState(Space space) {
+            this.particleStates = space.getParticles().stream()
+                    .map(Particle::saveState)
+                    .collect(Collectors.toList());
         }
     }
 }
