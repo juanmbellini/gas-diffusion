@@ -22,11 +22,10 @@ public class Initializer {
      * @return The created {@link Space}.
      */
     public static Space generateInitialSpace(final double spaceSideLength, final int amountOfParticles) {
-        final Random rnd = new Random();
         final List<Particle> particles = IntStream.range(0, amountOfParticles)
                 .mapToObj(idx ->
-                        new Particle(rnd.nextDouble() * spaceSideLength,
-                                rnd.nextDouble() * spaceSideLength,
+                        new Particle(new Random().nextDouble() * spaceSideLength,
+                                new Random().nextDouble() * spaceSideLength,
                                 0.03, AngleUtils.randomAngle()))
                 .collect(Collectors.toList());
 
