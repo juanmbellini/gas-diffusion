@@ -2,6 +2,9 @@ package ar.edu.itba.ss.off_lattice.simulation;
 
 import ar.edu.itba.ss.off_lattice.models.Particle;
 import ar.edu.itba.ss.off_lattice.models.Space;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -9,6 +12,7 @@ import java.util.Queue;
 /**
  * The main class of the simulation (i.e the simulation performer).
  */
+@Component
 public class SimulationEngine {
 
     // ========================================
@@ -54,7 +58,10 @@ public class SimulationEngine {
      * @param interactionRadius The interaction radius
      *                          (i.e up to which radius a {@link Particle} is consider a neighbor of another).
      */
-    public SimulationEngine(double spaceSideLength, int amountOfParticles, double interactionRadius) {
+    @Autowired
+    public SimulationEngine(@Value("${custom.system.length}") double spaceSideLength,
+                            @Value("${custom.system.particles}") int amountOfParticles,
+                            @Value("${custom.system.interaction-radius}") double interactionRadius) {
         this.spaceSideLength = spaceSideLength;
         this.amountOfParticles = amountOfParticles;
         this.interactionRadius = interactionRadius;

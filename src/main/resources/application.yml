@@ -5,6 +5,15 @@ spring:
         active: dev
     main:
         banner-mode: "off"
+custom:
+    system:
+        length: 100
+        particles: 1000
+        interaction-radius: 2.5
+    simulation:
+        iterations: 500
+        eta: 1.5
+        M: 10
 
 ---
 # Configuration for Development Environment

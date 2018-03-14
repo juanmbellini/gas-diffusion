@@ -22,7 +22,7 @@
         <org.springframework.boot.version>1.5.10.RELEASE</org.springframework.boot.version>
 
         <!-- Execution properties -->
-        <bootstrapClass>ar.edu.itba.ss.off_lattice.App</bootstrapClass>
+        <bootstrapClass>ar.edu.itba.ss.off_lattice.SelfPropelledFlockSimulator</bootstrapClass>
     </properties>
 
     <dependencyManagement>
@@ -41,6 +41,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 

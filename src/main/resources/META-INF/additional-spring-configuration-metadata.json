@@ -1,0 +1,34 @@
+{
+  "properties": [
+    {
+      "name": "custom.system.length",
+      "type": "java.lang.Double",
+      "description": "The space's side length (i.e the 'L' value)."
+    },
+    {
+      "name": "custom.system.particles",
+      "type": "java.lang.Integer",
+      "description": "The amount of particles in the space."
+    },
+    {
+      "name": "custom.system.interaction-radius",
+      "type": "java.lang.Double",
+      "description": "The interaction radius between the particles."
+    },
+    {
+      "name": "custom.simulation.iterations",
+      "type": "java.lang.Integer",
+      "description": "The amount of iterations the simulation will perform."
+    },
+    {
+      "name": "custom.simulation.eta",
+      "type": "java.lang.Double",
+      "description": "The 'eta' value for the simulation (i.e used for calculating noise when updating speed angles)."
+    },
+    {
+      "name": "custom.simulation.M",
+      "type": "java.lang.Double",
+      "description": "The 'M' value, used by cell index method."
+    }
+  ]
+}
