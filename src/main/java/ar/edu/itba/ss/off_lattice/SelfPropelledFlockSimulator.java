@@ -78,7 +78,7 @@ public class SelfPropelledFlockSimulator implements CommandLineRunner {
      */
     private void simulate() {
         LOGGER.info("Starting simulation...");
-        engine.simulate(arguments.getIterations(), arguments.getEta(), arguments.getM());
+        engine.simulate(arguments.getIterations(), arguments.getEta(), arguments.getM(), arguments.getSpeedModule());
         LOGGER.info("Finished simulation");
     }
 

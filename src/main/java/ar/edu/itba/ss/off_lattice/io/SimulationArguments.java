@@ -27,19 +27,27 @@ public final class SimulationArguments {
      */
     private final int m;
 
+    /**
+     * The speed module used in the simulation.
+     */
+    private final double speedModule;
+
 
     /**
-     * @param iterations The amount of iterations.
-     * @param eta        The 'eta' value, used for calculating noise for updating angles.
-     * @param m          The 'm' value used by cell index method.
+     * @param iterations  The amount of iterations.
+     * @param eta         The 'eta' value, used for calculating noise for updating angles.
+     * @param m           The 'm' value used by cell index method.
+     * @param speedModule The speed module used in the simulation.
      */
     @Autowired
     private SimulationArguments(@Value("${custom.simulation.iterations}") int iterations,
                                 @Value("${custom.simulation.eta}") double eta,
-                                @Value("${custom.simulation.M}") int m) {
+                                @Value("${custom.simulation.M}") int m,
+                                @Value("${custom.simulation.speed-module}") double speedModule) {
         this.iterations = iterations;
         this.eta = eta;
         this.m = m;
+        this.speedModule = speedModule;
     }
 
     /**
@@ -61,5 +69,12 @@ public final class SimulationArguments {
      */
     public int getM() {
         return m;
+    }
+
+    /**
+     * @return The speed module used in the simulation.
+     */
+    public double getSpeedModule() {
+        return speedModule;
     }
 }

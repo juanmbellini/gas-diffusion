@@ -19,14 +19,15 @@ public class Initializer {
      *
      * @param spaceSideLength   The length of the side of the {@link Space} to be generated..
      * @param amountOfParticles The amount of {@link Particle}s to be held in the {@link Space}.
+     * @param speedModule       The speed module used in the simulation.
      * @return The created {@link Space}.
      */
-    public static Space generateInitialSpace(double spaceSideLength, int amountOfParticles) {
+    public static Space generateInitialSpace(double spaceSideLength, int amountOfParticles, double speedModule) {
         final List<Particle> particles = IntStream.range(0, amountOfParticles)
                 .mapToObj(idx ->
                         new Particle(new Random().nextDouble() * spaceSideLength,
                                 new Random().nextDouble() * spaceSideLength,
-                                0.03, AngleUtils.randomAngle()))
+                                speedModule, AngleUtils.randomAngle()))
                 .collect(Collectors.toList());
 
         return new Space(spaceSideLength, particles);

@@ -31,6 +31,11 @@
       "description": "The 'M' value, used by cell index method."
     },
     {
+      "name": "custom.simulation.speed-module",
+      "type": "java.lang.Double",
+      "description": "The speed module to be used in the simulation."
+    },
+    {
       "name": "custom.output.raw",
       "type": "java.lang.String",
       "description": "The path for the raw file."

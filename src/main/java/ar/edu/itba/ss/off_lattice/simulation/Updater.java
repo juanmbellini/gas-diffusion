@@ -35,11 +35,11 @@ public class Updater {
      * @param interactionRadius The interaction radius
      *                          (i.e up to which radius a {@link Particle} is consider a neighbor of another).
      * @param eta               The eta value used for noise when updating the angle.
-     * @param M                 The amount of grids the {@link Space} is divided into.
+     * @param m                 The amount of grids the {@link Space} is divided into.
      */
-    public Updater(Space space, double interactionRadius, double eta, int M) {
+    public Updater(Space space, double interactionRadius, double eta, int m) {
         this.space = space;
-        this.neighborhoodsCalculator = new NeighborhoodsCalculator(space, interactionRadius, M);
+        this.neighborhoodsCalculator = new NeighborhoodsCalculator(space, interactionRadius, m);
         this.eta = eta;
     }
 

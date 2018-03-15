@@ -72,14 +72,18 @@ public class SimulationEngine {
     /**
      * Starts the simulation.
      *
-     * @param iterations The amount of iterations to be performed in the simulation.
+     * @param iterations  The amount of iterations to be performed in the simulation.
+     * @param eta         The 'eta' value, used for calculating noise for updating angles.
+     * @param m           The 'm' value used by cell index method.
+     * @param speedModule The speed module used in the simulation.
      * @throws IllegalStateException In case this engine is now simulating.
      */
-    public void simulate(final int iterations, double eta, int M) throws IllegalStateException {
+    public void simulate(final int iterations, double eta, int m, double speedModule) throws IllegalStateException {
         validateState();
         this.simulating = true;
-        final Space space = Initializer.generateInitialSpace(this.spaceSideLength, this.amountOfParticles);
-        final Updater updater = new Updater(space, interactionRadius, eta, M);
+        final Space space = Initializer
+                .generateInitialSpace(this.spaceSideLength, this.amountOfParticles, speedModule);
+        final Updater updater = new Updater(space, interactionRadius, eta, m);
         this.states.offer(space.saveState());
         for (int iteration = 0; iteration < iterations; iteration++) {
             updater.update();

@@ -126,6 +126,16 @@ $ java -jar <path-to-jar> --custom.simulation.M=15
 
 **The default value is 10.**
 
+### Speed module
+You can specify the speed module for the particles ```--custom.simulation.speed-module``` argument.
+For example, if you want a speed module of ```0.3```, you would execute:
+
+```
+$ java -jar <path-to-jar> --custom.simulation.speed-module=0.3
+```
+
+**The default value is 0.03.**
+
 ### Ovito file path
 You can specify the path where the Ovito file will be saved with the ```--output.ovito``` argument.
 For example, if you want to save the file in the ```/tmp``` directory, you would execute:
