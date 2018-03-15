@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Queue;
 
@@ -24,9 +24,9 @@ import java.util.Queue;
     @Override
     public void save(String path, Queue<S> simulationStates) {
 
-        try (final FileWriter writer = new FileWriter(createFile(path))) {
-            doSave(writer, simulationStates);
-            writer.flush();
+        try (final FileOutputStream fileOutputStream = new FileOutputStream(createFile(path))) {
+            doSave(fileOutputStream, simulationStates);
+            fileOutputStream.flush();
         } catch (IOException e) {
             LOGGER.warn("Could not save {} file", path);
         }
@@ -36,12 +36,12 @@ import java.util.Queue;
     /**
      * Performs the operation of saving data.
      *
-     * @param writer           The {@link FileWriter} used to write a file.
+     * @param fileOutputStream The {@link FileOutputStream} used to write the file.
      * @param simulationStates The simulation results to be saved.
      * @throws IOException In case any I/O error occurs while performing the operation.
      */
     /* package */
-    abstract void doSave(FileWriter writer, Queue<S> simulationStates) throws IOException;
+    abstract void doSave(FileOutputStream fileOutputStream, Queue<S> simulationStates) throws IOException;
 
     /**
      * Creates a {@link File} in the given {@code path}.

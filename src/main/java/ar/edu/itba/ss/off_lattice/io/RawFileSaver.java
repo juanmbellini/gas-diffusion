@@ -3,8 +3,10 @@ package ar.edu.itba.ss.off_lattice.io;
 import ar.edu.itba.ss.off_lattice.models.Space;
 import org.springframework.stereotype.Component;
 
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Queue;
 
 /**
@@ -15,7 +17,9 @@ import java.util.Queue;
 public class RawFileSaver extends FileSaver<Space.SpaceState> {
 
     @Override
-    void doSave(FileWriter writer, Queue<Space.SpaceState> simulationStates) throws IOException {
-        // TODO: implement logic
+    void doSave(FileOutputStream fileOutputStream, Queue<Space.SpaceState> simulationStates) throws IOException {
+        final ArrayList<Space.SpaceState> auxList = new ArrayList<>(simulationStates); // Copy into a Serializable List
+        final ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeObject(auxList);
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -17,7 +18,7 @@ import java.util.stream.Stream;
 public class SpaceOvitoFileSaver extends OvitoFileSaver<Space.SpaceState> {
 
     @Override
-    void saveState(FileWriter writer, Space.SpaceState state, int frame) throws IOException {
+    void saveState(Writer writer, Space.SpaceState state, int frame) throws IOException {
 
         final List<Particle.ParticleState> finalList = Stream
                 .concat(getLimitStream(state.getSpaceSideLength()), state.getParticleStates().stream())
