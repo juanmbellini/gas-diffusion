@@ -141,10 +141,22 @@ You can specify the path where the Ovito file will be saved with the ```--output
 For example, if you want to save the file in the ```/tmp``` directory, you would execute:
 
 ```
-$ java -jar <path-to-jar> --custom.output.ovito=/tmp
+$ java -jar <path-to-jar> --custom.output.ovito=/tmp/ovito.xtz
 ```
 
 **There is no default value.**
+
+### Raw file path
+You can specify the path where the raw file will be saved with the ```--custom.output.raw``` argument.
+For example, if you want to save the file in the ```/tmp``` directory, you would execute:
+
+```
+$ java -jar <path-to-jar> --custom.output.raw=/tmp/raw.dat
+```
+
+**There is no default value.**
+
+**Note:** The raw file is just a binary file holding an ```ArrayList``` with the states.
 
 ## Authors
 
