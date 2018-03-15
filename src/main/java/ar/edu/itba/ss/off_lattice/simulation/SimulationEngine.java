@@ -42,7 +42,7 @@ public class SimulationEngine {
     /**
      * The states generated in each simulation step.
      */
-    private final Queue<StateSaver.State> states;
+    private final Queue<Space.SpaceState> states;
 
     /**
      * A flag indicating that this engine is now simulating
@@ -85,11 +85,12 @@ public class SimulationEngine {
             updater.update();
             states.offer(space.saveState());
         }
+        this.simulating = false;
     }
 
     /**
      * Clears this engine
-     * (i.e removes all {@link ar.edu.itba.ss.off_lattice.simulation.StateSaver.State}s from the {@link Queue}).
+     * (i.e removes all {@link State}s from the {@link Queue}).
      *
      * @throws IllegalStateException In case this engine is now simulating.
      */
@@ -104,7 +105,7 @@ public class SimulationEngine {
      * @return A {@link Queue} with the states gotten in the simulation.
      * @throws IllegalStateException In case this engine is now simulating.
      */
-    public Queue<StateSaver.State> getStates() throws IllegalStateException {
+    public Queue<Space.SpaceState> getStates() throws IllegalStateException {
         validateState();
         return new LinkedList<>(states);
     }

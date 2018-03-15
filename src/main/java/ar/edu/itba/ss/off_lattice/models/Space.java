@@ -1,5 +1,6 @@
 package ar.edu.itba.ss.off_lattice.models;
 
+import ar.edu.itba.ss.off_lattice.simulation.State;
 import ar.edu.itba.ss.off_lattice.simulation.StateSaver;
 import org.springframework.util.Assert;
 
@@ -11,7 +12,7 @@ import java.util.stream.Collectors;
  * Represents a space in which the simulation is done.
  * Note that this is a squared space.
  */
-public class Space implements StateSaver {
+public class Space implements StateSaver<Space.SpaceState> {
 
     /**
      * The length of the side of this space.
@@ -54,7 +55,7 @@ public class Space implements StateSaver {
     }
 
     @Override
-    public State saveState() {
+    public SpaceState saveState() {
         return new SpaceState(this);
     }
 
@@ -97,14 +98,19 @@ public class Space implements StateSaver {
     // ========================================
 
     /**
-     * Bean class that extends {@link StateSaver.State},
+     * Bean class that extends {@link State},
      * which stores the actual state of a {@link Space}.
      */
     public static final class SpaceState extends State {
         /**
-         * The {@link StateSaver.State} of the {@link Particle}s in the {@link Space}.
+         * The {@link List} with the {@link State} of the {@link Particle}s in the {@link Space}.
          */
-        final List<Particle.ParticleState> particleStates;
+        private final List<Particle.ParticleState> particleStates;
+
+        /**
+         * The length of the side of this space.
+         */
+        private final double spaceSideLength;
 
         /**
          * Constructor.
@@ -115,6 +121,21 @@ public class Space implements StateSaver {
             this.particleStates = space.getParticles().stream()
                     .map(Particle::saveState)
                     .collect(Collectors.toList());
+            this.spaceSideLength = space.getSideLength();
+        }
+
+        /**
+         * @return The {@link List} with the {@link State} of the {@link Particle}s in the {@link Space}.
+         */
+        public List<Particle.ParticleState> getParticleStates() {
+            return particleStates;
+        }
+
+        /**
+         * @return The length of the side of this space.
+         */
+        public double getSpaceSideLength() {
+            return spaceSideLength;
         }
     }
 }

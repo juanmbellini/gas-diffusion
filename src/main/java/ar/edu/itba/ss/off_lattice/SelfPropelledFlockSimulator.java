@@ -2,8 +2,9 @@ package ar.edu.itba.ss.off_lattice;
 
 import ar.edu.itba.ss.off_lattice.io.OutputSaver;
 import ar.edu.itba.ss.off_lattice.io.SimulationArguments;
+import ar.edu.itba.ss.off_lattice.models.Space;
 import ar.edu.itba.ss.off_lattice.simulation.SimulationEngine;
-import ar.edu.itba.ss.off_lattice.simulation.StateSaver;
+import ar.edu.itba.ss.off_lattice.simulation.State;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class SelfPropelledFlockSimulator implements CommandLineRunner {
     /**
      * {@link Map} holding {@link OutputSaver}s, together with the path in which each saver must save.
      */
-    private final Map<OutputSaver, String> outputSavers;
+    private final Map<OutputSaver<Space.SpaceState>, String> outputSavers;
 
     /**
      * Constructor.
@@ -51,15 +52,15 @@ public class SelfPropelledFlockSimulator implements CommandLineRunner {
      */
     @Autowired
     public SelfPropelledFlockSimulator(SimulationEngine engine, SimulationArguments arguments,
-                                       OutputSaver rawFileSaver,
+                                       OutputSaver<Space.SpaceState> rawFileSaver,
                                        @Value("${custom.output.raw}") String rawFilePath,
-                                       OutputSaver ovitoFileSaver,
+                                       OutputSaver<Space.SpaceState> spaceOvitoFileSaver,
                                        @Value("${custom.output.ovito}") String ovitoFilePath) {
         this.engine = engine;
         this.arguments = arguments;
         this.outputSavers = new HashMap<>();
         this.outputSavers.put(rawFileSaver, rawFilePath);
-        this.outputSavers.put(ovitoFileSaver, ovitoFilePath);
+        this.outputSavers.put(spaceOvitoFileSaver, ovitoFilePath);
     }
 
 
@@ -84,10 +85,10 @@ public class SelfPropelledFlockSimulator implements CommandLineRunner {
     /**
      * Performs the save phase of the program.
      */
-    private void saveSimulation() throws IOException {
+    private <S extends State> void saveSimulation() throws IOException {
         LOGGER.info("Saving output in all formats...");
         try {
-            final Queue<StateSaver.State> simulationOutput = engine.getStates();
+            final Queue<Space.SpaceState> simulationOutput = engine.getStates();
             outputSavers.forEach((saver, path) -> saver.save(path, simulationOutput));
         } catch (IllegalStateException e) {
             LOGGER.error("Tried to get simulation results while still simulating");

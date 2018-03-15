@@ -1,5 +1,6 @@
 package ar.edu.itba.ss.off_lattice.models;
 
+import ar.edu.itba.ss.off_lattice.simulation.State;
 import ar.edu.itba.ss.off_lattice.simulation.StateSaver;
 import org.springframework.util.Assert;
 
@@ -7,7 +8,7 @@ import org.springframework.util.Assert;
  * Represents a particle of the simulation.
  * This is a point-alike particle (i.e it has no radius).
  */
-public class Particle implements StateSaver {
+public class Particle implements StateSaver<Particle.ParticleState> {
 
     /**
      * The 'x' value for this particle's position.
@@ -38,6 +39,8 @@ public class Particle implements StateSaver {
     public Particle(double initialX, double initialY, double initialSpeedModule, double initialSpeedAngle) {
         this.x = initialX;
         this.y = initialY;
+        this.speedModule = initialSpeedModule;
+        this.speedAngle = initialSpeedAngle;
     }
 
     /**
@@ -61,10 +64,10 @@ public class Particle implements StateSaver {
      *              (i.e used for periodic boundary conditions).
      */
     public void move(double limit) {
-        final double auxX = (Math.cos(this.speedAngle) * this.speedModule) % limit;
-        final double auxY = (Math.sin(this.speedAngle) * this.speedModule) % limit;
-        this.x += auxX < 0 ? auxX + limit : auxX;
-        this.y += auxY < 0 ? auxY + limit : auxY;
+        final double auxX = (this.x + (Math.cos(this.speedAngle) * this.speedModule)) % limit;
+        final double auxY = (this.y + (Math.sin(this.speedAngle) * this.speedModule)) % limit;
+        this.x = auxX < 0 ? auxX + limit : auxX;
+        this.y = auxY < 0 ? auxY + limit : auxY;
     }
 
     @Override
@@ -147,7 +150,7 @@ public class Particle implements StateSaver {
     // ========================================
 
     /**
-     * Bean class that extends {@link StateSaver.State},
+     * Bean class that extends {@link State},
      * which stores the actual state of a {@link Particle}.
      */
     public static final class ParticleState extends State {
@@ -173,7 +176,7 @@ public class Particle implements StateSaver {
          *
          * @param particle The {@link Particle} whose state must be saved.
          */
-        private ParticleState(Particle particle) {
+        public ParticleState(Particle particle) {
             this.x = particle.getX();
             this.y = particle.getY();
             this.speedModule = particle.getSpeedModule();

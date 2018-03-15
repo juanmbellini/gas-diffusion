@@ -1,6 +1,6 @@
 package ar.edu.itba.ss.off_lattice.io;
 
-import ar.edu.itba.ss.off_lattice.simulation.StateSaver;
+import ar.edu.itba.ss.off_lattice.simulation.State;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,8 +11,10 @@ import java.util.Queue;
 
 /**
  * Abstract implementation of {@link OutputSaver}, implementing basic methods.
+ *
+ * @param <S> A concrete subtype of {@link State}.
  */
-/* package */ abstract class FileSaver implements OutputSaver {
+/* package */ abstract class FileSaver<S extends State> implements OutputSaver<S> {
 
     /**
      * The {@link Logger} object.
@@ -20,7 +22,7 @@ import java.util.Queue;
     private final static Logger LOGGER = LoggerFactory.getLogger(FileSaver.class);
 
     @Override
-    public void save(String path, Queue<StateSaver.State> simulationStates) {
+    public void save(String path, Queue<S> simulationStates) {
 
         try (final FileWriter writer = new FileWriter(createFile(path))) {
             doSave(writer, simulationStates);
@@ -39,7 +41,7 @@ import java.util.Queue;
      * @throws IOException In case any I/O error occurs while performing the operation.
      */
     /* package */
-    abstract void doSave(FileWriter writer, Queue<StateSaver.State> simulationStates) throws IOException;
+    abstract void doSave(FileWriter writer, Queue<S> simulationStates) throws IOException;
 
     /**
      * Creates a {@link File} in the given {@code path}.
