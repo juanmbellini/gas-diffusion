@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
@@ -55,12 +56,15 @@ public class SelfPropelledFlockSimulator implements CommandLineRunner {
                                        OutputSaver<Space.SpaceState> rawFileSaver,
                                        @Value("${custom.output.raw}") String rawFilePath,
                                        OutputSaver<Space.SpaceState> spaceOvitoFileSaver,
-                                       @Value("${custom.output.ovito}") String ovitoFilePath) {
+                                       @Value("${custom.output.ovito}") String ovitoFilePath,
+                                       OutputSaver<Space.SpaceState> orderAgainstIterationsFileSaver,
+                                       @Value("${custom.output.order}") String orderFilePath) {
         this.engine = engine;
         this.arguments = arguments;
         this.outputSavers = new HashMap<>();
         this.outputSavers.put(rawFileSaver, rawFilePath);
         this.outputSavers.put(spaceOvitoFileSaver, ovitoFilePath);
+        this.outputSavers.put(orderAgainstIterationsFileSaver, orderFilePath);
     }
 
 
@@ -89,7 +93,7 @@ public class SelfPropelledFlockSimulator implements CommandLineRunner {
         LOGGER.info("Saving output in all formats...");
         try {
             final Queue<Space.SpaceState> simulationOutput = engine.getStates();
-            outputSavers.forEach((saver, path) -> saver.save(path, simulationOutput));
+            outputSavers.forEach((saver, path) -> saver.save(path, new LinkedList<>(simulationOutput)));
         } catch (IllegalStateException e) {
             LOGGER.error("Tried to get simulation results while still simulating");
             System.exit(1);

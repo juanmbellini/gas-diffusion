@@ -44,6 +44,11 @@
       "name": "custom.output.ovito",
       "type": "java.lang.String",
       "description": "The path for the Ovito file."
+    },
+    {
+      "name": "custom.output.order",
+      "type": "java.lang.String",
+      "description": "The path for the Order values file."
     }
   ]
 }

@@ -3,7 +3,10 @@ package ar.edu.itba.ss.off_lattice.io;
 import ar.edu.itba.ss.off_lattice.simulation.State;
 import org.springframework.stereotype.Component;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.Queue;
 
 /**
@@ -15,10 +18,11 @@ import java.util.Queue;
 @Component
 public abstract class TextFileSaver<S extends State> extends FileSaver<S> {
 
-
     @Override
-    void doSave(FileOutputStream fileOutputStream, Queue<S> simulationStates) throws IOException {
-        doSave(new OutputStreamWriter(fileOutputStream), simulationStates);
+    void doSave(File file, Queue<S> simulationStates) throws IOException {
+        try (FileWriter writer = new FileWriter(file)) {
+            doSave(writer, simulationStates);
+        }
     }
 
     /**
