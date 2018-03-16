@@ -34,7 +34,7 @@ public class OtherSimulationDataFileSaver extends TextFileSaver<Space.SpaceState
      * @return The calculated density.
      */
     private static double calculateDensity(Space.SpaceState spaceState) {
-        return spaceState.getSpaceSideLength() / spaceState.getParticleStates().size();
+        return spaceState.getParticleStates().size() / Math.pow(spaceState.getSpaceSideLength(), 2);
     }
 
     /**
