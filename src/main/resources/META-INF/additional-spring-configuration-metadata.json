@@ -1,0 +1,59 @@
+{
+  "properties": [
+    {
+      "name": "custom.system.length",
+      "type": "java.lang.Double",
+      "description": "The space's side length (i.e the 'L' value)."
+    },
+    {
+      "name": "custom.system.particles",
+      "type": "java.lang.Integer",
+      "description": "The amount of particles in the space."
+    },
+    {
+      "name": "custom.system.interaction-radius",
+      "type": "java.lang.Double",
+      "description": "The interaction radius between the particles."
+    },
+    {
+      "name": "custom.simulation.iterations",
+      "type": "java.lang.Integer",
+      "description": "The amount of iterations the simulation will perform."
+    },
+    {
+      "name": "custom.simulation.eta",
+      "type": "java.lang.Double",
+      "description": "The 'eta' value for the simulation (i.e used for calculating noise when updating speed angles)."
+    },
+    {
+      "name": "custom.simulation.M",
+      "type": "java.lang.Double",
+      "description": "The 'M' value, used by cell index method."
+    },
+    {
+      "name": "custom.simulation.speed-module",
+      "type": "java.lang.Double",
+      "description": "The speed module to be used in the simulation."
+    },
+    {
+      "name": "custom.output.raw",
+      "type": "java.lang.String",
+      "description": "The path for the raw file."
+    },
+    {
+      "name": "custom.output.ovito",
+      "type": "java.lang.String",
+      "description": "The path for the Ovito file."
+    },
+    {
+      "name": "custom.output.order",
+      "type": "java.lang.String",
+      "description": "The path for the Order values file."
+    },
+    {
+      "name": "custom.output.other",
+      "type": "java.lang.String",
+      "description": "The path for the other data values file."
+    }
+  ]
+}
