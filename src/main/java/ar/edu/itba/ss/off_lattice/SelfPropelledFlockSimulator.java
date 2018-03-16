@@ -1,5 +1,6 @@
 package ar.edu.itba.ss.off_lattice;
 
+import ar.edu.itba.ss.off_lattice.io.OtherSimulationDataFileSaver;
 import ar.edu.itba.ss.off_lattice.io.OutputSaver;
 import ar.edu.itba.ss.off_lattice.io.SimulationArguments;
 import ar.edu.itba.ss.off_lattice.models.Space;
@@ -58,13 +59,16 @@ public class SelfPropelledFlockSimulator implements CommandLineRunner {
                                        OutputSaver<Space.SpaceState> spaceOvitoFileSaver,
                                        @Value("${custom.output.ovito}") String ovitoFilePath,
                                        OutputSaver<Space.SpaceState> orderAgainstIterationsFileSaver,
-                                       @Value("${custom.output.order}") String orderFilePath) {
+                                       @Value("${custom.output.order}") String orderFilePath,
+                                       OtherSimulationDataFileSaver otherSimulationDataFileSaver,
+                                       @Value("${custom.output.other}") String otherDataFilePath) {
         this.engine = engine;
         this.arguments = arguments;
         this.outputSavers = new HashMap<>();
         this.outputSavers.put(rawFileSaver, rawFilePath);
         this.outputSavers.put(spaceOvitoFileSaver, ovitoFilePath);
         this.outputSavers.put(orderAgainstIterationsFileSaver, orderFilePath);
+        this.outputSavers.put(otherSimulationDataFileSaver, otherDataFilePath);
     }
 
 
